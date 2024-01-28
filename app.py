@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pickle
-import numpy as np
+
+from main import vectorizer
 
 app = FastAPI()
 
@@ -23,9 +24,3 @@ async def classify_text(query: Query):
     predicted_label = label_encoder.inverse_transform([prediction])[0]
     return {"predicted_label": predicted_label}
 
-
-with open('trained_model.pkl', 'wb') as model_file:
-    pickle.dump(model, model_file)
-
-with open('label_encoder.pkl', 'wb') as label_encoder_file:
-    pickle.dump(label_encoder, label_encoder_file)
